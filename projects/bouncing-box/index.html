@@ -6,6 +6,14 @@
 	<title>Bouncing Box</title>
 	<script src="jquery.min.js"></script>
 	<style>
+		body {
+			background: url("https://assets.epuzzle.info/puzzle/125/270/original.jpg") no-repeat center center fixed;
+            background-color: #cccccc;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+		}
 		.box {
 			width: 70px;
 			height: 70px;
@@ -52,8 +60,9 @@
 			box.on('click', handleBoxClick);
 
 			// moves the Box to a new position on the screen along the X-Axis
-			function moveBoxTo(newPositionX) {
+			function moveBoxTo(newPositionX, newPositionY) {
 				box.css("left", newPositionX);
+				box.css("top", newPositionY)
 			}
 
 			// changes the text displayed on the Box
@@ -66,17 +75,32 @@
 			//////////////////////////////////////////////////////////////////
 
 			// TODO 2 - Variable declarations 
-
-
-
+			var positionX = 0;
+			var positionY = 0;
+			var speedY = 0;
+			var points = 0;
+			var speed = 10;
+			var boardHeight = jQuery(window).height();
 			/* 
 			This Function will be called 20 times/second. Each time it is called,
 			it should move the Box to a new location. If the box drifts off the screen
 			turn it around! 
 			*/
 			function update() {
-
-
+				positionX += speed;
+				positionY += speedY;
+				
+				moveBoxTo(positionX, positionY);
+				if (positionX > boardWidth) {
+					speed *= -1;
+				} else if (positionX < 0) {
+					speed *= -1;
+				}
+				if (positionY > boardHeight) {
+					speedY *= -1;
+				} else if (positionY < 0) {
+					speedY *= -1;
+				}
 			};
 
 			/* 
@@ -85,11 +109,21 @@
 			the left side of the screen.
 			*/
 			function handleBoxClick() {
-
-
+				positionX = 0;
+				positionY = 0;
+				if (speed > 0) {
+					speed += 3;
+				} else if (speed < 0) {
+					speed -= 3;
+				}
+				if (speedY => 0) {
+					speedY += 3;
+				} else if (speed < 0) {
+					speedY -= 3;
+				}
+				points += 1;
+				changeBoxText(points);
 			};
-
-
 
 
 
